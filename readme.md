@@ -51,8 +51,8 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
 
 ### 🗄️ Repositórios
 
-- [ ] `CustomerRepository`
-    - [ ] `existsByEmail(String email)`
+- [x] `CustomerRepository`
+    - [x] `existsByEmail(String email)`
 - [ ] `ProductRepository`
 - [ ] `OrderRepository`
     - [ ] `findByCustomerId(UUID customerId)`
@@ -62,8 +62,8 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
 
 ### ⚙️ Serviços
 
-- [ ] `CustomerService`
-    - [ ] `create` — valida e-mail único, salva cliente
+- [x] `CustomerService`
+    - [x] `create` — valida e-mail único, salva cliente
 - [ ] `ProductService`
     - [ ] `create` — cadastra produto com estoque inicial
     - [ ] `findAll` — lista com paginação
@@ -80,8 +80,8 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
 
 ### 🌐 Controllers
 
-- [ ] `CustomerController`
-    - [ ] `POST /customers`
+- [x] `CustomerController`
+    - [x] `POST /customers`
 - [ ] `ProductController`
     - [ ] `POST /products`
     - [ ] `GET /products` (paginado)
@@ -126,12 +126,13 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
 
 ### ❌ Tratamento de Erros
 
-- [ ] `GlobalExceptionHandler` com `@ControllerAdvice`
+- [x] `RestExceptionHandler` com `@RestControllerAdvice`
     - [ ] `EntityNotFoundException` → 404
-    - [ ] `EmailAlreadyExistsException` → 409
+    - [x] `EmailAlreadyExistsException` → 409
     - [ ] `InsufficientStockException` → 422
-    - [ ] `MethodArgumentNotValidException` → 400
+    - [x] `MethodArgumentNotValidException` → 400
     - [ ] `OptimisticLockingFailureException` → 409
+    - [x] `HttpMessageNotReadableException` → 422
 
 ---
 
@@ -185,6 +186,9 @@ src/main/java/com/.../
 │   └── OrderItem.java
 ├── dto/
 ├── exception/
+│   ├── GlobalExceptionHandler.java
+│   ├── RestExceptionHandler.java
+│   └── EmailAlreadyExistsException.java
 └── OrdersPlatformApplication.java
 ```
 
