@@ -24,18 +24,18 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
 
 ### 🐳 Infraestrutura
 
-- [ ] `docker-compose.yml` com PostgreSQL e RabbitMQ
-- [ ] `application.properties` com datasource, JPA e configurações do RabbitMQ
+- [x] `docker-compose.yml` com PostgreSQL e RabbitMQ
+- [x] `application.properties` com datasource, JPA e configurações do RabbitMQ
 
 ---
 
 ### 🗂️ Entidades
 
-- [ ] `Customer` (id, name, email)
-- [ ] `Product` (id, name, price, stockQuantity) com `@Version` para Optimistic Locking
-- [ ] `Order` (id, customerId, status, createdAt)
-- [ ] `OrderItem` (id, orderId, productId, quantity, unitPrice)
-- [ ] Enum `OrderStatus` (`PENDING`, `PROCESSING`, `CONFIRMED`, `SHIPPED`, `CANCELLED`)
+- [x] `Customer` (id, name, email)
+- [x] `Product` (id, name, price, stockQuantity) com `@Version` para Optimistic Locking
+- [x] `Order` (id, customerId, status, createdAt)
+- [x] `OrderItem` (id, orderId, productId, quantity, unitPrice)
+- [x] Enum `OrderStatus` (`PENDING`, `PROCESSING`, `CONFIRMED`, `SHIPPED`, `CANCELLED`)
 
 ---
 
