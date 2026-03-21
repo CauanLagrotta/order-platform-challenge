@@ -41,7 +41,7 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
 
 ### 📦 DTOs
 
-- [ ] `CustomerRequestDTO` / `CustomerResponseDTO`
+- [x] `CustomerRequestDTO` / `CustomerResponseDTO`
 - [ ] `ProductRequestDTO` / `ProductResponseDTO`
 - [ ] `OrderRequestDTO` (customerId, List\<OrderItemDTO\>)
 - [ ] `OrderItemDTO` (productId, quantity)
