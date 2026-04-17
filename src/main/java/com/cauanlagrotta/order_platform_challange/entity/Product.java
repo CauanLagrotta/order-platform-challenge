@@ -1,6 +1,8 @@
 package com.cauanlagrotta.order_platform_challange.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,4 +30,20 @@ public class Product {
   @Version
   @Column(name = "version", nullable = false)
   private Integer version;
+
+  public Product(String name, BigDecimal price, Long stockQuantity, Integer version) {
+    this.name = name;
+    this.price = price;
+    this.stockQuantity = stockQuantity;
+    this.version = version;
+  }
+
+  public Product() {
+  }
+
+  public Product(String name, BigDecimal price, Long stockQuantity) {
+    this.name = name;
+    this.price = price;
+    this.stockQuantity = stockQuantity;
+  }
 }
