@@ -1,6 +1,6 @@
 package com.cauanlagrotta.order_platform_challange.services;
 
-import com.cauanlagrotta.order_platform_challange.dtos.CustomerRequestDTO;
+import com.cauanlagrotta.order_platform_challange.dto.CustomerRequestDTO;
 import com.cauanlagrotta.order_platform_challange.entity.Customer;
 import com.cauanlagrotta.order_platform_challange.exceptions.EmailAlreadyExistsException;
 import com.cauanlagrotta.order_platform_challange.repository.CustomerRepository;
