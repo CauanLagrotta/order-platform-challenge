@@ -42,10 +42,10 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
 ### 📦 DTOs
 
 - [x] `CustomerRequestDTO` / `CustomerResponseDTO`
-- [ ] `ProductRequestDTO` / `ProductResponseDTO`
-- [ ] `OrderRequestDTO` (customerId, List\<OrderItemDTO\>)
-- [ ] `OrderItemDTO` (productId, quantity)
-- [ ] `OrderResponseDTO` (id, customerId, status, items)
+- [x] `ProductRequestDTO` / `ProductResponseDTO`
+- [x] `OrderRequestDTO` (customerId, List\<OrderItemRequestDTO\>)
+- [x] `OrderItemRequestDTO` (productId, quantity)
+- [x] `OrderResponseDTO` (id, customerId, status, items)
 
 ---
 
@@ -53,9 +53,9 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
 
 - [x] `CustomerRepository`
     - [x] `existsByEmail(String email)`
-- [ ] `ProductRepository`
-- [ ] `OrderRepository`
-    - [ ] `findByCustomerId(UUID customerId)`
+- [x] `ProductRepository`
+- [x] `OrderRepository`
+    - [x] `findByCustomerId(UUID customerId)`
 - [ ] `OrderItemRepository`
 
 ---
@@ -64,10 +64,10 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
 
 - [x] `CustomerService`
     - [x] `create` — valida e-mail único, salva cliente
-- [ ] `ProductService`
-    - [ ] `create` — cadastra produto com estoque inicial
-    - [ ] `findAll` — lista com paginação
-    - [ ] `findById` — busca por ID
+- [x] `ProductService`
+    - [x] `create` — cadastra produto com estoque inicial
+    - [x] `findAll` — lista com paginação
+    - [x] `findById` — busca por ID
 - [ ] `OrderService`
     - [ ] `create` — valida cliente e produtos, salva pedido como `PENDING`, publica na fila
     - [ ] `findById` — busca pedido com itens
@@ -82,9 +82,9 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
 
 - [x] `CustomerController`
     - [x] `POST /customers`
-- [ ] `ProductController`
-    - [ ] `POST /products`
-    - [ ] `GET /products` (paginado)
+- [x] `ProductController`
+    - [x] `POST /products`
+    - [x] `GET /products` (paginado)
     - [ ] `GET /products/{id}`
 - [ ] `OrderController`
     - [ ] `POST /orders`
@@ -120,7 +120,7 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
 - [ ] Dead Letter Queue — após 3 falhas a mensagem vai para `orders.failed`
 - [ ] Consumer da DLQ cancela o pedido automaticamente
 - [ ] Idempotência — reprocessar a mesma mensagem não duplica ações (verificar status antes de processar)
-- [ ] Optimistic Locking com `@Version` na entidade `Product`
+- [x] Optimistic Locking com `@Version` na entidade `Product`
 
 ---
 
@@ -189,7 +189,7 @@ src/main/java/com/.../
 │   ├── GlobalExceptionHandler.java
 │   ├── RestExceptionHandler.java
 │   └── EmailAlreadyExistsException.java
-└── OrdersPlatformApplication.java
+└── Application.java
 ```
 
 ---
