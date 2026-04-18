@@ -68,6 +68,7 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
     - [x] `create` — cadastra produto com estoque inicial
     - [x] `findAll` — lista com paginação
     - [x] `findById` — busca por ID
+    - [x] `ProductNotFoundException` — error handling com resposta padronizada
 - [ ] `OrderService`
     - [ ] `create` — valida cliente e produtos, salva pedido como `PENDING`, publica na fila
     - [ ] `findById` — busca pedido com itens
@@ -85,7 +86,7 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
 - [x] `ProductController`
     - [x] `POST /products`
     - [x] `GET /products` (paginado)
-    - [ ] `GET /products/{id}`
+    - [x] `GET /products/{id}`
 - [ ] `OrderController`
     - [ ] `POST /orders`
     - [ ] `GET /orders/{id}`
