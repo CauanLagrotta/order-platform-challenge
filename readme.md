@@ -33,8 +33,7 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
 
 - [x] `Customer` (id, name, email)
 - [x] `Product` (id, name, price, stockQuantity) com `@Version` para Optimistic Locking
-- [x] `Order` (id, customerId, status, createdAt)
-- [x] `OrderItem` (id, orderId, productId, quantity, unitPrice)
+- [x] `Order` (id, customerId, productId, quantity, total, status, createdAt, updatedAt)
 - [x] Enum `OrderStatus` (`PENDING`, `PROCESSING`, `CONFIRMED`, `SHIPPED`, `CANCELLED`)
 
 ---
@@ -43,9 +42,8 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
 
 - [x] `CustomerRequestDTO` / `CustomerResponseDTO`
 - [x] `ProductRequestDTO` / `ProductResponseDTO`
-- [x] `OrderRequestDTO` (customerId, List\<OrderItemRequestDTO\>)
-- [x] `OrderItemRequestDTO` (productId, quantity)
-- [x] `OrderResponseDTO` (id, customerId, status, items)
+- [x] `OrderRequestDTO` (customerId, productId, quantity)
+- [x] `OrderResponseDTO` (id, customerId, productId, quantity, status, total)
 
 ---
 
@@ -56,7 +54,6 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
 - [x] `ProductRepository`
 - [x] `OrderRepository`
     - [x] `findByCustomerId(UUID customerId)`
-- [ ] `OrderItemRepository`
 
 ---
 
@@ -69,9 +66,9 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
     - [x] `findAll` — lista com paginação
     - [x] `findById` — busca por ID
     - [x] `ProductNotFoundException` — error handling com resposta padronizada
-- [ ] `OrderService`
-    - [ ] `create` — valida cliente e produtos, salva pedido como `PENDING`, publica na fila
-    - [ ] `findById` — busca pedido com itens
+- [x] `OrderService`
+    - [x] `create` — valida cliente e produtos, calcula total, salva pedido como `PENDING`
+    - [ ] `findById` — busca pedido
     - [ ] `findByCustomer` — lista pedidos de um cliente
 - [ ] `StockService`
     - [ ] `reserve` — reserva estoque de todos os itens atomicamente (`@Transactional`)
@@ -87,8 +84,8 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
     - [x] `POST /products`
     - [x] `GET /products` (paginado)
     - [x] `GET /products/{id}`
-- [ ] `OrderController`
-    - [ ] `POST /orders`
+- [x] `OrderController`
+    - [x] `POST /orders`
     - [ ] `GET /orders/{id}`
     - [ ] `GET /orders?customerId=uuid`
 
@@ -128,7 +125,8 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
 ### ❌ Tratamento de Erros
 
 - [x] `RestExceptionHandler` com `@RestControllerAdvice`
-    - [ ] `EntityNotFoundException` → 404
+    - [x] `CustomerNotFoundException` → 404
+    - [x] `ProductNotFoundException` → 404
     - [x] `EmailAlreadyExistsException` → 409
     - [ ] `InsufficientStockException` → 422
     - [x] `MethodArgumentNotValidException` → 400
@@ -183,8 +181,7 @@ src/main/java/com/.../
 │   │   └── OrderStatus.java
 │   ├── Customer.java
 │   ├── Product.java
-│   ├── Order.java
-│   └── OrderItem.java
+│   └── Order.java
 ├── dto/
 ├── exception/
 │   ├── GlobalExceptionHandler.java
