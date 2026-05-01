@@ -24,3 +24,12 @@ http get "http://localhost:8080/products?page=0&pageSize=10"
 http get http://localhost:8080/products/{id}
 ```
 
+---
+
+## Orders
+- Criar order
+```bash
+http post http://localhost:8080/orders customerId=83f0293d-6dab-4a76-a954-2029782d0705 productId=2340f705-fae8-4a83-8471-1a3e734d391f quantity:=2
+```
+
+
