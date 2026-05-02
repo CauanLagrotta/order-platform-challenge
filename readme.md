@@ -36,6 +36,8 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
 - [x] `Order` (id, customerId, productId, quantity, total, status, createdAt, updatedAt)
 - [x] Enum `OrderStatus` (`PENDING`, `PROCESSING`, `CONFIRMED`, `SHIPPED`, `CANCELLED`)
 
+*Nota: `Customer`, `Product` e `Order` agora incluem `@JsonIgnoreProperties` para evitar erros de serialização com proxies do Hibernate. `Order` também possui construtor vazio adicionado para serialização.*
+
 ---
 
 ### 📦 DTOs
@@ -43,7 +45,7 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
 - [x] `CustomerRequestDTO` / `CustomerResponseDTO`
 - [x] `ProductRequestDTO` / `ProductResponseDTO`
 - [x] `OrderRequestDTO` (customerId, productId, quantity)
-- [x] `OrderResponseDTO` (id, customerId, productId, quantity, status, total)
+- [x] `OrderResponseDTO` (id, customer, product, quantity, status, total)
 
 ---
 
@@ -67,8 +69,8 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
     - [x] `findById` — busca por ID
     - [x] `ProductNotFoundException` — error handling com resposta padronizada
 - [x] `OrderService`
-    - [x] `create` — valida cliente e produtos, calcula total, salva pedido como `PENDING`
-    - [ ] `findById` — busca pedido
+    - [x] `create` — valida cliente e produto, verifica estoque disponível, reduz estoque do produto, calcula total, salva pedido como `PENDING`
+    - [x] `findById` — busca pedido
     - [ ] `findByCustomer` — lista pedidos de um cliente
 - [ ] `StockService`
     - [ ] `reserve` — reserva estoque de todos os itens atomicamente (`@Transactional`)
@@ -86,8 +88,8 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
     - [x] `GET /products/{id}`
 - [x] `OrderController`
     - [x] `POST /orders`
-    - [ ] `GET /orders/{id}`
-    - [ ] `GET /orders?customerId=uuid`
+    - [x] `GET /orders/{id}`
+    - [x] `GET /orders?customerId=uuid`
 
 ---
 
@@ -128,10 +130,12 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
     - [x] `CustomerNotFoundException` → 404
     - [x] `ProductNotFoundException` → 404
     - [x] `EmailAlreadyExistsException` → 409
-    - [ ] `InsufficientStockException` → 422
     - [x] `MethodArgumentNotValidException` → 400
     - [ ] `OptimisticLockingFailureException` → 409
     - [x] `HttpMessageNotReadableException` → 422
+- [x] `GlobalExceptionHandler` para exceções personalizadas com respostas padronizadas (ProblemDetail)
+    - [x] `InsufficientStockException` → 422
+    - [x] `OrderNotFoundException` → 404
 
 ---
 
@@ -186,7 +190,9 @@ src/main/java/com/.../
 ├── exception/
 │   ├── GlobalExceptionHandler.java
 │   ├── RestExceptionHandler.java
-│   └── EmailAlreadyExistsException.java
+│   ├── EmailAlreadyExistsException.java
+│   ├── InsufficientStockException.java
+│   └── OrderNotFoundException.java
 └── Application.java
 ```
 
