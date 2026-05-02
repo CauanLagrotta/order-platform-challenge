@@ -1,6 +1,7 @@
 package com.cauanlagrotta.order_platform_challange.entity;
 
 import com.cauanlagrotta.order_platform_challange.entity.enums.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @Table(name = "orders")
 @Getter
 @Setter
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Order {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
@@ -66,5 +68,8 @@ public class Order {
     this.status = status;
     this.productId = productId;
     this.quantity = quantity;
+  }
+
+  public Order() {
   }
 }

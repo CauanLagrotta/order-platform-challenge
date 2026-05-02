@@ -1,5 +1,6 @@
 package com.cauanlagrotta.order_platform_challange.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import java.util.UUID;
 @Setter
 @Getter
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Customer {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)

@@ -9,8 +9,8 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 public record OrderResponseDTO(UUID id,
-                               Customer customerId,
-                               Product productId,
+                               Customer customer,
+                               Product product,
                                int quantity,
                                OrderStatus status,
                                BigDecimal total) {
