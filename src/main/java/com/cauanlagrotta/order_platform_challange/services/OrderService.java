@@ -17,6 +17,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.cauanlagrotta.order_platform_challange.repository.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -59,5 +61,10 @@ public class OrderService {
   public OrderResponseDTO findById(UUID id){
     Optional<Order> order = orderRepository.findById(id);
     return OrderResponseDTO.fromEntity(order.orElseThrow(OrderNotFoundException::new));
+  }
+
+  public Page<OrderResponseDTO> findAllByCustomerId(PageRequest pageRequest, UUID customerId){
+    Page<Order> orders = orderRepository.findAllOrdersByCustomerId(pageRequest, customerId);
+    return orders.map(OrderResponseDTO::fromEntity);
   }
 }
