@@ -4,10 +4,9 @@ import com.cauanlagrotta.order_platform_challange.dto.OrderRequestDTO;
 import com.cauanlagrotta.order_platform_challange.dto.OrderResponseDTO;
 import com.cauanlagrotta.order_platform_challange.services.OrderService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/orders")
@@ -22,5 +21,10 @@ public class OrderController {
   public ResponseEntity<OrderResponseDTO> create(@RequestBody OrderRequestDTO dto) {
     orderService.create(dto);
     return ResponseEntity.status(201).body(orderService.create(dto));
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<OrderResponseDTO> findById(@PathVariable UUID id){
+    return ResponseEntity.ok(orderService.findById(id));
   }
 }
