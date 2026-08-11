@@ -28,14 +28,14 @@ public class OrderController {
     return ResponseEntity.status(201).body(response);
   }
 
-  @GetMapping("/{id}")
-  public ResponseEntity<OrderResponseDTO> findById(@PathVariable UUID id){
-    return ResponseEntity.ok(orderService.findById(id));
+  @GetMapping("/{orderId}")
+  public ResponseEntity<OrderResponseDTO> findById(@PathVariable UUID orderId){
+    return ResponseEntity.ok(orderService.findById(orderId));
   }
 
-  @GetMapping
+  @GetMapping("/customer/{customerId}")
   public ResponseEntity<ListResponse<OrderResponseDTO>>
-      listCustomersOrders(@RequestParam("customerId") UUID customerId,
+      listCustomersOrders(@PathVariable("customerId") UUID customerId,
                           @RequestParam(name = "page", defaultValue = "0") Integer page,
                           @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize){
 

@@ -64,7 +64,7 @@ public class OrderService {
   }
 
   public Page<OrderResponseDTO> findAllByCustomerId(PageRequest pageRequest, UUID customerId){
-    Page<Order> orders = orderRepository.findAllOrdersByCustomerId(pageRequest, customerId);
+    Page<Order> orders = orderRepository.findByCustomerId_Id(customerId, pageRequest);
     return orders.map(OrderResponseDTO::fromEntity);
   }
 }
