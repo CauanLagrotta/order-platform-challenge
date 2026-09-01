@@ -26,14 +26,14 @@ public class Order {
 
   @ManyToOne
   @JoinColumn(name = "customer_id")
-  private Customer customerId;
+  private Customer customer;
 
   @Column(name = "status")
   private OrderStatus status = OrderStatus.PENDING;
 
   @ManyToOne
-  @JoinColumn(name = "product_id")
-  private Product productId;
+  @JoinColumn(name = "product")
+  private Product product;
 
   @Column(name = "total")
   private BigDecimal total;
@@ -49,24 +49,24 @@ public class Order {
   @Column(name = "updated_at")
   private LocalDateTime updatedAt;
 
-  public Order(@NotNull UUID customerId, OrderStatus pending, @NotNull UUID productId, @NotNull int quantity) {
+  public Order(@NotNull UUID customer, OrderStatus pending, @NotNull UUID product, @NotNull int quantity) {
   }
 
-  public Order(UUID id, Customer customerId, OrderStatus status, Product productId, BigDecimal total, int quantity, LocalDateTime createdAt, LocalDateTime updatedAt) {
+  public Order(UUID id, Customer customer, OrderStatus status, Product product, BigDecimal total, int quantity, LocalDateTime createdAt, LocalDateTime updatedAt) {
     this.id = id;
-    this.customerId = customerId;
+    this.customer = customer;
     this.status = status;
-    this.productId = productId;
+    this.product = product;
     this.total = total;
     this.quantity = quantity;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }
 
-  public Order(Customer customerId, OrderStatus status, Product productId, int quantity) {
-    this.customerId = customerId;
+  public Order(Customer customer, OrderStatus status, Product product, int quantity) {
+    this.customer = customer;
     this.status = status;
-    this.productId = productId;
+    this.product = product;
     this.quantity = quantity;
   }
 
