@@ -16,7 +16,7 @@ public record OrderResponseDTO(UUID id,
                                BigDecimal total) {
 
   public static OrderResponseDTO fromEntity(Order order) {
-    return new OrderResponseDTO(order.getId(), order.getCustomerId(), order.getProductId(),
+    return new OrderResponseDTO(order.getId(), order.getCustomer(), order.getProduct(),
         order.getQuantity(), order.getStatus(), order.getTotal());
   }
 }
