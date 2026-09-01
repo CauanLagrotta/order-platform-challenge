@@ -69,12 +69,12 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
     - [x] `findById` — busca por ID
     - [x] `ProductNotFoundException` — error handling com resposta padronizada
 - [x] `OrderService`
-    - [x] `create` — valida cliente e produto, verifica estoque disponível, reduz estoque do produto, calcula total, salva pedido como `PENDING`
+    - [x] `create` — valida cliente e produto, calcula total, salva pedido como `PENDING` e publica evento `OrderCreated`
     - [x] `findById` — busca pedido
     - [x] `findByCustomer` — lista pedidos de um cliente
-- [ ] `StockService`
-    - [ ] `reserve` — reserva estoque de todos os itens atomicamente (`@Transactional`)
-    - [ ] `rollback` — reverte reserva em caso de falha
+- [x] `StockService`
+    - [x] `reserve` — reserva estoque de todos os itens atomicamente (`@Transactional`)
+    - [x] `rollback` — reverte reserva em caso de falha
 
 ---
 
@@ -95,31 +95,31 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
 
 ### 📨 Mensageria (RabbitMQ)
 
-- [ ] `RabbitMQConfig.java`
-    - [ ] Declarar exchange, filas e bindings
-    - [ ] Fila `orders.created`
-    - [ ] Fila `orders.confirmed`
-    - [ ] Fila `orders.failed` (DLQ)
-    - [ ] Configurar TTL e max-retries para a DLQ
-- [ ] `OrderPublisher.java`
-    - [ ] `publishOrderCreated(OrderMessage message)`
-    - [ ] `publishOrderConfirmed(OrderMessage message)`
-- [ ] `OrderCreatedConsumer.java`
-    - [ ] Lê fila `orders.created`
-    - [ ] Tenta reservar estoque via `StockService`
-    - [ ] Sucesso → status `CONFIRMED` + publica em `orders.confirmed`
-    - [ ] Falha → status `CANCELLED` + rollback de estoque
-- [ ] `OrderConfirmedConsumer.java`
-    - [ ] Lê fila `orders.confirmed`
-    - [ ] Aguarda 5 segundos e muda status para `SHIPPED`
+- [x] `RabbitMQConfig.java`
+    - [x] Declarar exchange, filas e bindings
+    - [x] Fila `orders.created`
+    - [x] Fila `orders.confirmed`
+    - [x] Fila `orders.failed` (DLQ)
+    - [x] Configurar TTL e max-retries para a DLQ
+- [x] `OrderPublisher.java`
+    - [x] `publishOrderCreated(OrderMessage message)`
+    - [x] `publishOrderConfirmed(OrderMessage message)`
+- [x] `OrderCreatedConsumer.java`
+    - [x] Lê fila `orders.created`
+    - [x] Tenta reservar estoque via `StockService`
+    - [x] Sucesso → status `CONFIRMED` + publica em `orders.confirmed`
+    - [x] Falha → status `CANCELLED` + rollback de estoque
+- [x] `OrderConfirmedConsumer.java`
+    - [x] Lê fila `orders.confirmed`
+    - [x] Aguarda 5 segundos e muda status para `SHIPPED`
 
 ---
 
 ### 🛡️ Resiliência
 
-- [ ] Dead Letter Queue — após 3 falhas a mensagem vai para `orders.failed`
-- [ ] Consumer da DLQ cancela o pedido automaticamente
-- [ ] Idempotência — reprocessar a mesma mensagem não duplica ações (verificar status antes de processar)
+- [x] Dead Letter Queue — após 3 falhas a mensagem vai para `orders.failed`
+- [x] Consumer da DLQ cancela o pedido automaticamente
+- [x] Idempotência — reprocessar a mesma mensagem não duplica ações (verificar status antes de processar)
 - [x] Optimistic Locking com `@Version` na entidade `Product`
 
 ---
@@ -131,7 +131,6 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
     - [x] `ProductNotFoundException` → 404
     - [x] `EmailAlreadyExistsException` → 409
     - [x] `MethodArgumentNotValidException` → 400
-    - [ ] `OptimisticLockingFailureException` → 409
     - [x] `HttpMessageNotReadableException` → 422
 - [x] `GlobalExceptionHandler` para exceções personalizadas com respostas padronizadas (ProblemDetail)
     - [x] `InsufficientStockException` → 422
