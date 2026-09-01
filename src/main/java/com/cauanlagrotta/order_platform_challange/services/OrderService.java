@@ -1,5 +1,6 @@
 package com.cauanlagrotta.order_platform_challange.services;
 
+import com.cauanlagrotta.order_platform_challange.dto.OrderMessage;
 import com.cauanlagrotta.order_platform_challange.dto.OrderRequestDTO;
 import com.cauanlagrotta.order_platform_challange.dto.OrderResponseDTO;
 import com.cauanlagrotta.order_platform_challange.entity.Customer;
@@ -10,6 +11,7 @@ import com.cauanlagrotta.order_platform_challange.exceptions.CustomerNotFoundExc
 import com.cauanlagrotta.order_platform_challange.exceptions.InsufficientStockException;
 import com.cauanlagrotta.order_platform_challange.exceptions.OrderNotFoundException;
 import com.cauanlagrotta.order_platform_challange.exceptions.ProductNotFoundException;
+import com.cauanlagrotta.order_platform_challange.publisher.OrderPublisher;
 import com.cauanlagrotta.order_platform_challange.repository.CustomerRepository;
 import com.cauanlagrotta.order_platform_challange.repository.OrderRepository;
 import java.math.BigDecimal;
@@ -27,11 +29,13 @@ public class OrderService {
   private final OrderRepository orderRepository;
   private final ProductRepository productRepository;
   private final CustomerRepository customerRepository;
+  private final OrderPublisher orderPublisher;
 
-  public OrderService(OrderRepository orderRepository, ProductRepository productRepository, CustomerRepository customerRepository) {
+  public OrderService(OrderRepository orderRepository, ProductRepository productRepository, CustomerRepository customerRepository, OrderPublisher orderPublisher) {
     this.orderRepository = orderRepository;
     this.productRepository = productRepository;
     this.customerRepository = customerRepository;
+    this.orderPublisher = orderPublisher;
   }
 
   @Transactional
@@ -47,15 +51,15 @@ public class OrderService {
     Order order = new Order(customer, OrderStatus.PENDING, product, dto.quantity());
     order.setTotal(total);
 
-    if(product.getStockQuantity() < order.getQuantity()){
+    if(product.getStockQuantity() < dto.quantity()){
       throw new InsufficientStockException();
-    }else{
-      product.setStockQuantity(product.getStockQuantity() - dto.quantity());
     }
 
     orderRepository.save(order);
 
-    return new OrderResponseDTO(order.getId(), order.getCustomerId(), order.getProductId(), order.getQuantity(), order.getStatus(), total);
+    orderPublisher.publishOrderCreated(OrderMessage.fromOrder(order));
+
+    return new OrderResponseDTO(order.getId(), order.getCustomer(), order.getProduct(), order.getQuantity(), order.getStatus(), total);
   }
 
   public OrderResponseDTO findById(UUID id){
