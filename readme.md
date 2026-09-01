@@ -71,7 +71,7 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
 - [x] `OrderService`
     - [x] `create` — valida cliente e produto, verifica estoque disponível, reduz estoque do produto, calcula total, salva pedido como `PENDING`
     - [x] `findById` — busca pedido
-    - [ ] `findByCustomer` — lista pedidos de um cliente
+    - [x] `findByCustomer` — lista pedidos de um cliente
 - [ ] `StockService`
     - [ ] `reserve` — reserva estoque de todos os itens atomicamente (`@Transactional`)
     - [ ] `rollback` — reverte reserva em caso de falha
