@@ -138,15 +138,6 @@ Plataforma simplificada de e-commerce com processamento assíncrono de pedidos v
 
 ---
 
-### ⭐ Diferenciais
-
-- [ ] Swagger com todos os endpoints documentados (springdoc-openapi)
-- [ ] Outbox Pattern — salvar evento em tabela `outbox` antes de publicar no RabbitMQ
-    - [ ] Entidade `OutboxEvent` (id, aggregateId, type, payload, sentAt)
-    - [ ] Scheduler que lê eventos pendentes e publica na fila
-
----
-
 ### 🧪 Testes
 
 - [ ] Unitários do `StockService` com falha parcial (Mockito)
